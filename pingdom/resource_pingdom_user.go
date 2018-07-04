@@ -226,12 +226,29 @@ func resourcePingdomUserUpdate(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 
-	log.Printf("[DEBUG] User update configuration: %#v, %#v", d.Get("name"), d.Get("hostname"))
-
 	_, err = client.Users.Update(id, &user)
 	if err != nil {
 		return fmt.Errorf("Error updating user: %s", err)
 	}
+
+	for i:= range user.Sms {
+		contact := pingdom.Contact{
+			Provider : user.Sms[i].Provider,
+			Number : user.Sms[i].Number,
+			CountryCode : user.Sms[i].CountryCode,
+			Severity : user.Sms[i].Severity,
+		}
+		client.Users.UpdateContact(id, user.Sms[i].Id, contact)
+	}
+
+	for i:= range user.Email {
+		contact := pingdom.Contact{
+			Severity : user.Email[i].Severity,
+			Email : user.Email[i].Address,
+		}
+		client.Users.UpdateContact(id, user.Email[i].Id, contact)
+	}
+
 
 	return nil
 }
