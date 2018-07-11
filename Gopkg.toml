@@ -26,16 +26,16 @@
 
 
 [[constraint]]
+  branch = "master"
+  name = "github.com/billtrust/go-pingdom"
+
+[[constraint]]
   name = "github.com/hashicorp/terraform"
   version = "0.11.7"
 
 [[constraint]]
   branch = "master"
   name = "github.com/mitchellh/mapstructure"
-
-[[constraint]]
-  branch = "master"
-  name = "github.com/billtrust/go-pingdom"
 
 [prune]
   go-tests = true
