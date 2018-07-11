@@ -68,6 +68,66 @@ type MaintenanceCheckResponse struct {
 	Tms    []int `json:"tms"`
 }
 
+// ProbeResponse represents the json response for probes from the PIngdom API
+type ProbeResponse struct {
+	ID         int    `json:"id"`
+	Country    string `json:"country"`
+	City       string `json:"city"`
+	Name       string `json:"name"`
+	Active     bool   `json:"active"`
+	Hostname   string `json:"hostname"`
+	IP         string `json:"ip"`
+	IPv6       string `json:"ipv6"`
+	CountryISO string `json:"countryiso"`
+	Region     string `json:"region"`
+}
+
+// TeamResponse represents the json response for teams from the PIngdom API
+type TeamResponse struct {
+	ID    string `json:"id"`
+	Name  string `json:"name"`
+	Users []TeamUserResponse
+}
+
+// TeamUserResponse represents the json response for users in teams from the PIngdom API
+type TeamUserResponse struct {
+	ID    string `json:"id"`
+	Email string `json:"email"`
+	Name  string `json:"name"`
+}
+
+// TeamDeleteResponse represents the json response for delete team from the PIngdom API
+type TeamDeleteResponse struct {
+	Success bool `json:"success"`
+}
+
+type UserSmsResponse struct {
+	Id int `json:"id"`
+	Severity string `json:"severity"`
+	CountryCode string `json:"country_code"`
+	Number string `json:"number"`
+	Provider string `json:"provider"`
+}
+
+type UserEmailResponse struct {
+	Id int `json:"id"`
+	Severity string `json:"severity"`
+	Address string `json:"address"`
+}
+
+type CreateUserContactResponse struct {
+	Id int `json:"id"`
+}
+
+// MaintenanceWindow represents a Pingdom Maintenance Window.
+type UsersResponse struct {
+	Id    		   int  `json:"id"`
+	Paused         string  `json:"paused,omitempty"`
+	Username       string `json:"name,omitempty"`
+	Sms			   []UserSmsResponse `json:"sms,omitempty"`
+	Email 		   []UserEmailResponse `json:"email,omitempty"`
+}
+
 func (c *CheckResponseType) UnmarshalJSON(b []byte) error {
 	var raw interface{}
 
@@ -129,12 +189,36 @@ type listMaintenanceJsonResponse struct {
 	Maintenances []MaintenanceResponse `json:"maintenance"`
 }
 
+type listProbesJsonResponse struct {
+	Probes []ProbeResponse `json:"probes"`
+}
+
+type listTeamsJsonResponse struct {
+	Teams []TeamResponse `json:"teams"`
+}
+
 type checkDetailsJsonResponse struct {
 	Check *CheckResponse `json:"check"`
 }
 
 type maintenanceDetailsJsonResponse struct {
 	Maintenance *MaintenanceResponse `json:"maintenance"`
+}
+
+type teamDetailsJsonResponse struct {
+	Team *TeamResponse `json:"team"`
+}
+
+type createUserContactJsonResponse struct {
+	Contact *CreateUserContactResponse `json:"contact_target"`
+}
+
+type createUserJsonResponse struct {
+	User *UsersResponse `json:"user"`
+}
+
+type listUsersJsonResponse struct {
+	Users []UsersResponse `json:"users"`
 }
 
 type errorJsonResponse struct {
