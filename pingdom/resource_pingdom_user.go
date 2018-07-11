@@ -3,8 +3,9 @@ package pingdom
 import (
 "fmt"
 "log"
-"strconv""github.com/hashicorp/terraform/helper/schema"
-"github.com/russellcardullo/go-pingdom/pingdom"
+"strconv"
+"github.com/hashicorp/terraform/helper/schema"
+"github.com/billtrust/go-pingdom/pingdom"
 )
 
 func resourcePingdomUser() *schema.Resource {

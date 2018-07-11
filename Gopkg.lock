@@ -317,7 +317,7 @@
 
 [[projects]]
   branch = "master"
-  name = "github.com/russellcardullo/go-pingdom"
+  name = "github.com/billtrust/go-pingdom"
   packages = ["pingdom"]
   revision = "1fa7564b16852285b2b20b31a964c011c26000bc"
 
