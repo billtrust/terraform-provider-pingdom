@@ -26,7 +26,7 @@ func resourcePingdomUserContactSms() *schema.Resource {
 			},
 			"severity": {
 				Type:     schema.TypeString,
-				Required: false,
+				Optional: true,
 			},
 			"country_code": {
 				Type: schema.TypeString,
@@ -36,14 +36,24 @@ func resourcePingdomUserContactSms() *schema.Resource {
 				Type: schema.TypeString,
 				Required: true,
 			},
-			"provider" : {
+			"phone_provider" : {
 				Type:     schema.TypeString,
-				Required: false,
+				Optional: true,
 			},
 		},
 	}
 }
 
+
+func validatePhoneProvider(provider string) (bool,error) {
+	list := [4]string{"nexmo", "bulksms", "cellsynt", "esendex" }
+	for _, b := range list {
+		if b == provider {
+			return true,nil
+		}
+	}
+	return false, fmt.Errorf("Phone Provider must be one of: nexmo, bulksms, cellsynt, esendex")
+}
 
 func resourcePingdomUserContactSmsCreate(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*pingdom.Client)
@@ -55,7 +65,11 @@ func resourcePingdomUserContactSmsCreate(d *schema.ResourceData, meta interface{
 		userId = v.(int)
 	}
 
-	if v, ok := d.GetOk("provider"); ok {
+	if v, ok := d.GetOk("phone_provider"); ok {
+		_, err := validatePhoneProvider(v.(string))
+		if err != nil {
+			return err
+		}
 		contact.Provider = v.(string)
 	}
 
@@ -100,7 +114,7 @@ func resourcePingdomUserContactSmsRead(d *schema.ResourceData, meta interface{})
 			if sms.Id == id {
 				d.SetId(strconv.Itoa(sms.Id))
 				d.Set("user_id", userId)
-				d.Set("provider", sms.Provider)
+				d.Set("phone_provider", sms.Provider)
 				d.Set("number", sms.Number)
 				d.Set("country_code", sms.CountryCode)
 				d.Set("severity", sms.Severity)
@@ -128,7 +142,11 @@ func resourcePingdomUserContactSmsUpdate(d *schema.ResourceData, meta interface{
 		userId = v.(int)
 	}
 
-	if v, ok := d.GetOk("provider"); ok {
+	if v, ok := d.GetOk("phone_provider"); ok {
+		_, err := validatePhoneProvider(v.(string))
+		if err != nil {
+			return err
+		}
 		contact.Provider = v.(string)
 	}
 

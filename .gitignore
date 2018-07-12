@@ -1,2 +1,7 @@
 _vendor-*
 \.idea/
+\.terraform/
+.terraform.tfstate.lock.info
+terraform.tfstate
+terraform.tfstate.backup
+secret.auto.tfvars

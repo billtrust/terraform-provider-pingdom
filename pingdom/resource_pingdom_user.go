@@ -28,13 +28,13 @@ func resourcePingdomUser() *schema.Resource {
 
 			"paused": {
 				Type:     schema.TypeString,
-				Required: false,
+				Optional: true,
 				ForceNew: false,
 			},
 
 			"primary": {
 				Type:     schema.TypeString,
-				Required: false,
+				Optional: true,
 				ForceNew: false,
 			},
 		},

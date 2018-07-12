@@ -8,7 +8,7 @@ import (
 	"github.com/billtrust/go-pingdom/pingdom"
 )
 
-func resourcePingdomUserContactEmailEmail() *schema.Resource {
+func resourcePingdomUserContactEmail() *schema.Resource {
 	return &schema.Resource{
 		Create: resourcePingdomUserContactEmailCreate,
 		Read:   resourcePingdomUserContactEmailRead,
@@ -28,7 +28,8 @@ func resourcePingdomUserContactEmailEmail() *schema.Resource {
 
 			"severity": {
 				Type:     schema.TypeString,
-				Required: false,
+				Optional: true,
+
 			},
 
 			"address": {
